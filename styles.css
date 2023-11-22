@@ -1,0 +1,221 @@
+* {
+    padding: 0;
+    margin: 0;
+/*     border: 1px solid white; */
+}
+
+:root {
+    --dark-green-alpha: rgba(109, 125, 85, 88%);
+    --dark-green: rgb(109, 125, 85);
+    --white-greeny: #d3d5ce;
+    --pure-black-greeny: #151514;
+}
+
+
+body {
+    background-color: var(--pure-black-greeny);
+    font-family: sans-serif
+}
+
+button {
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+header {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    display: flex;
+    flex-direction: row;
+    height: 45px;
+    align-items: center;
+    background-color: var(--dark-green);
+    border-bottom: 3px solid rgba(90, 102, 73, 0.88);
+}
+
+header button {
+    background-color: var(--white-greeny);
+    padding: 3px;
+    margin-top: 1px;
+}
+
+#search-container {
+    width: 70%;
+}
+
+#search-container input {
+    width: 70%;
+    margin-left: 5px;
+    background-color: var(--white-greeny);
+    padding: 1px;
+}
+
+#search-container button {
+    margin-left: 12px;
+}
+
+#add-task-button {
+    width: 15%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#user-options {
+    padding: 4px;
+    margin-left: 8.5vw;
+}
+
+main {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 80px;
+    height: 87vh;
+    font-size: 18px;
+}
+
+#tasks-list {
+    margin-right: -11vw;
+    padding-left: 15px;
+}
+
+#task-options {
+    border: 1px solid black;
+    margin-left: 13vw;
+    justify-self: right;
+    transition: 100ms ease-in-out;                      /*makes an animation when appears*/
+    background-color: var(--dark-green);
+    border-radius: 5px;
+    color: var(--white-greeny);
+    overflow-wrap: break-word;
+    position: fixed;
+}
+
+#task-options span {
+    font-style: italic;
+}
+
+#task-options h4, #task-options label {
+    color: var(--pure-black-greeny);
+}
+
+#task-options button:not(.close-button) {
+    background-color: var(--white-greeny);
+    margin-bottom: 15px;
+}
+
+#task-options > .close-button {
+    align-self: baseline;
+}
+
+#add-task-popup input, textarea, #submit-new-task, .inputs-editing-task{
+    background-color: var(--white-greeny);
+    padding: 2px;
+    margin-bottom: 8px;
+}
+
+#add-task-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);          /*scale(0) make it invisible*/
+    transition: 200ms ease-in-out;                      /*makes an animation when appears*/
+    border: 1px solid black;
+    border-radius: 3%;
+    z-index: 10;
+    background-color: var(--dark-green);
+    width: 500px;
+    max-width: 80%;
+}
+
+#add-task-popup.active {
+    transform: translate(-50%, -50%) scale(1);          /*with scale 1 make it visible*/
+}
+
+#popup-header {
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close-button {
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#add-task-container, #task-options {
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: column;
+    margin-top: -10px;
+    gap: 3px;
+}
+
+#add-task-container label {
+    font-size: 18px;
+}
+
+#submit-new-task, #task-options button:not(.close-button) {
+    margin-top: 15px;
+    width: 50%;
+    align-self: center;
+}
+
+#submit-new-task:hover, header button:hover, #task-options button:hover:not(.close-button) {
+    background-color: #c9d0b6;
+}
+
+#new-task-overlay {
+    position: fixed;
+    opacity: 0;                             /*makes it not visible the background overlay*/
+    transition: 200ms ease-in-out;                      /*makes an animation when appears*/
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .5);
+    pointer-events: none;                       /*if is none, it will let press buttons behind when not active*/
+}
+
+#new-task-overlay.active {
+    opacity: 1;                                 /*makes it visible the background overlay*/
+    pointer-events: all;
+}
+
+.task {
+    background-color: #3336;
+    padding: 10px 25px;
+    border-radius: 22.2px;
+    margin-bottom: 1.5rem;
+    max-width: 53vw;
+    overflow-wrap: break-word;               /* whenever it gets out of the line and continue next line*/
+}
+.task:hover {
+    background-color: #3d4f3c5e;
+    cursor: pointer;
+}
+
+.task > p { color: var(--white-greeny); }
+
+.expirations {
+    display: inline-flex;
+}
+
+.date {position: sticky; left: 50%;}
+
+.task p:first-of-type {
+    margin: 3px 0;
+    padding: 2px 0;
+}
+
+.task > h2 {
+    color: var(--dark-green);
+}
+
+
