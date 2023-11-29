@@ -31,6 +31,7 @@ header {
     flex-direction: row;
     height: 45px;
     align-items: center;
+	justify-content: space-evenly;
     background-color: var(--dark-green);
     border-bottom: 3px solid rgba(90, 102, 73, 0.88);
 }
@@ -43,18 +44,17 @@ header button {
 
 #search-container {
     width: 70%;
+	display: flex;
+	gap: 20px;
+	justify-content: space-evenly;
 }
 
 #search-container input {
     width: 70%;
-    margin-left: 5px;
     background-color: var(--white-greeny);
     padding: 1px;
 }
 
-#search-container button {
-    margin-left: 12px;
-}
 
 #add-task-button {
     width: 15%;
@@ -218,4 +218,16 @@ main {
     color: var(--dark-green);
 }
 
+@media(max-width: 715px) {
 
+	#add-task-button {
+		width: auto;
+	}
+
+}
+
+@media(max-width: 500px) {
+	#search-container {
+		gap: 12px;
+	}
+}

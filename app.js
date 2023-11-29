@@ -241,12 +241,16 @@ closeTaskOptions.addEventListener('click', () => taskOptions.style.visibility = 
 //search task
 searchButton.addEventListener('click', searchTask);
 
+searchInput.addEventListener('change', searchTask);
+
 function searchTask() {
     const text = searchInput.value;
     const matchesIds = [];
     let taskId = null;
 
-    tasksCollection.forEach(task => {       //maybe later update with map or filter
+	//new version
+
+    /*tasksCollection.forEach(task => {       //maybe later update with map or filter
         if (task.title == text) matchesIds.push(task.id.valueOf());
     });
 
@@ -275,7 +279,7 @@ function searchTask() {
     }
     else {
         console.log("nothing found with tha name");
-    }
+    }*/
 }
 
 //restart search button
