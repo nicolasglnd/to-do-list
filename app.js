@@ -215,8 +215,6 @@ function changeTask(indexTask) {
     tasksDisplayed[indexTask].children[1].textContent = tasksCollection[indexTask].description;
     tasksDisplayed[indexTask].children[2].textContent = formatTimeTo12(tasksCollection[indexTask].expirationTime);
     tasksDisplayed[indexTask].lastChild.textContent = formatDate(tasksCollection[indexTask].expirationDate);
-
-    console.log("changed");
 }
 
 // delete task button
@@ -230,7 +228,6 @@ function deleteTask(indexTask) {
     tasksDisplayed[indexTask].remove();
 
     taskOptions.style.visibility = "hidden";
-    console.log("deleted");
 }
 
 //close task's options with button
@@ -297,14 +294,8 @@ function formatDate(taskDate) {         //formats to month/day/year
     return `${dateSplitted[1]}/${dateSplitted[2]}/${dateSplitted[0]}`;
 }
 
-/*
-// this is test code to fix the search 
-searchInput.addEventListener('onchange', () => {
-	//gonna use the filter method	
-});*/
 
 /*
- *
  * this function i kept it here if i need to use the html node
  function formatTime12(htmlNode = null, timeAt24 = null) {
     //htmlNode is the input from html and timeAt24 if the input is like 14:23
@@ -325,7 +316,7 @@ searchInput.addEventListener('onchange', () => {
 
     let meridiem = hours >= 12 ? "PM" : "AM";
     hours = (hours % 12) || 12;
-    console.log(hours, minutes, meridiem, "iwi")
+    console.log(hours, minutes, meridiem)
     return `${hours.toString()}:${minutes} ${meridiem}`;
 }
  */
