@@ -62,7 +62,6 @@ const deleteClickedTask = document.getElementById("delete-task");
 const closeButtons = document.querySelectorAll(".close-button");
 const closeTaskOptions = closeButtons[0];
 const searchInput = document.querySelector("#text-to-search");
-const searchButton = document.querySelector("#search-button");
 const restartSearchButton = document.querySelector("#restart-search-button");
 const PBORDER = "2px solid var(--dark-green-alpha)";
 
@@ -239,58 +238,27 @@ closeTaskOptions.addEventListener('click', () => taskOptions.style.visibility = 
 
 
 //search task
-searchButton.addEventListener('click', searchTask);
 
-searchInput.addEventListener('change', searchTask);
+searchInput.addEventListener('input', searchTask);
 
 function searchTask() {
     const text = searchInput.value;
-    const matchesIds = [];
-    let taskId = null;
-
-	//new version
-
-    /*tasksCollection.forEach(task => {       //maybe later update with map or filter
-        if (task.title == text) matchesIds.push(task.id.valueOf());
-    });
-
-    if (matchesIds.length == 1) {
-        console.log("just one task has that name");
-        const perfectMatchIndex = tasksCollection.findIndex(task => matchesIds[0] == task.id);
-
-        tasksDisplayed.forEach(task => {
-            taskId = task.id.match(/\d/g).join("");
-            if (taskId != matchesIds[0]) task.style.display = "none";
-        });
-    }
-    else if (matchesIds.length > 1) {
-        console.log("a lot of that same name");
-
-        tasksDisplayed.forEach(task => {
-            taskId = task.id.match(/\d/g).join("");
-            task.style.display = "none";
-            for (let i = 0; i < matchesIds.length; i++) {
-                if (taskId == matchesIds[i]) {
-                    task.style.display = "block";
-                    break;
-                }
-            }
-        });
-    }
-    else {
-        console.log("nothing found with tha name");
-    }*/
+	
+	tasksDisplayed.forEach(task => {
+		if (task.firstElementChild.textContent.includes(text)) {
+			task.style.display = "block";
+		}
+		else {
+			task.style.display = "none";
+		}
+	});
 }
 
 //restart search button
-restartSearchButton.addEventListener('click', restartSearch);
-
-function restartSearch() {
+restartSearchButton.addEventListener('click', () => {
     searchInput.value = null;
-    tasksDisplayed.forEach(task => {
-        task.style.display = "block";
-    });
-}
+	searchTask();
+});
 
 
 //function that will trak of the state of the description and time-date to add the lines.
