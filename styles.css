@@ -218,6 +218,10 @@ main {
     color: var(--dark-green);
 }
 
+.task > p.expired {
+	color: #fb5f5f;
+}
+
 @media(max-width: 715px) {
 
 	#add-task-button {

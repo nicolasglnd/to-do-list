@@ -257,6 +257,32 @@ restartSearchButton.addEventListener('click', () => {
 	searchTask();
 });
 
+//every 1 minutes, checks if task has expired
+let expireInterval;
+
+expireInterval = setInterval(() => {
+	console.log("uwu");
+
+	for (let i = 0; i < tasksCollection.length; i++) {
+		const ID = "task-" + tasksCollection[i].id;
+		const DATE = tasksCollection[i].expirationDate;
+		const TIME = tasksCollection[i].expirationTime;
+		const task = document.getElementById(ID);
+
+		if (isExpired(DATE, TIME) && !task.children[2].classList.contains("expired")) {
+			task.children[2].classList.add("expired");
+			task.children[3].classList.add("expired");
+		}
+		else if (!isExpired(DATE, TIME) && task.children[2].classList.contains("expired")) {
+			task.children[2].classList.remove("expired");
+			task.children[3].classList.remove("expired");
+		}
+		else {
+			console.log(ID);
+		}
+	}
+}, 20000); //60000
+
 
 //function that will trak of the state of the description and time-date to add the lines.
 //this function will be in the changeTask function and displayNewTask function.
@@ -279,13 +305,28 @@ function areEmpty(indexTask) {
 function formatTimeTo12(timeAt24) {
     if (timeAt24 === "") return "";
 
-    let hours = timeAt24.split(":")[0];
-    let minutes = timeAt24.split(":")[1];
+	let [hours, minutes] = timeAt24.split(":");
     let meridiem = hours >= 12 ? "PM" : "AM";
     hours = (hours % 12) || 12;
 
     return `${hours.toString()}:${minutes} ${meridiem}`;
 }
+
+//there is no need for this, delete later if proven unnecessary
+/*function formatTimeTo24(timeAt12) {
+    if (timeAt12 === "") return "";
+
+	let [hours, minutes, meridiem] = timeAt12.split(/\W/);
+
+	if (meridiem === "PM") {
+		hours = parseInt(hours) + 12;
+	}
+	else if (meridiem === "AM" && hours === "12") {
+		hours = "0";
+	}
+
+    return `${hours.toString()}:${minutes}`;
+}*/
 
 function formatDate(taskDate) {         //formats to month/day/year
     if (taskDate === "") return "";
@@ -294,6 +335,17 @@ function formatDate(taskDate) {         //formats to month/day/year
     return `${dateSplitted[1]}/${dateSplitted[2]}/${dateSplitted[0]}`;
 }
 
+function isExpired(date, time) {	//accepts only 24 time
+	let dateNow = new Date();
+	let [hours, minutes] = time.split(":");
+	let [year, month, day] = date.split("-");
+	let taskDate = new Date(year, month - 1, day, hours, minutes);
+
+	epochNow = dateNow.getTime();
+	epochTask = taskDate.getTime();
+
+	return  (epochTask - epochNow < 0);
+}
 
 /*
  * this function i kept it here if i need to use the html node
