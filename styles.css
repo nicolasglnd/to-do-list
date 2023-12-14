@@ -63,17 +63,13 @@ header button {
     justify-content: center;
 }
 
-#user-options {
-    padding: 4px;
-    margin-left: 8.5vw;
-}
-
 main {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     margin-top: 80px;
     height: 87vh;
     font-size: 18px;
+	gap: 80px;
 }
 
 #tasks-list {
@@ -83,15 +79,22 @@ main {
 
 #task-options {
     border: 1px solid black;
-    margin-left: 13vw;
     justify-self: right;
-    transition: 100ms ease-in-out;                      /*makes an animation when appears*/
+    animation: right-to-left 500ms;                      /*makes an animation when appears*/
     background-color: var(--dark-green);
     border-radius: 5px;
     color: var(--white-greeny);
     overflow-wrap: break-word;
     position: fixed;
 }
+
+/*#task-options[display: flex] {
+    animation: right-to-left 500ms;                      
+}
+
+#task-options[display: none] {
+    animation: right-to-left 500ms;                      
+}*/
 
 #task-options span {
     font-style: italic;
@@ -220,6 +223,15 @@ main {
 
 .task > p.expired {
 	color: #fb5f5f;
+}
+
+@keyframes right-to-left {
+	0% {
+		transform: translateX(40vw);
+	}
+	100% {
+		transform: translateX(0);
+	}
 }
 
 @media(max-width: 715px) {
