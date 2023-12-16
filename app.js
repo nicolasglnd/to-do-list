@@ -223,11 +223,15 @@ function changeTask(indexTask) {
 deleteClickedTask.addEventListener('click', () => deleteTask(currentTaskIndex));
 
 function deleteTask(indexTask) {
-    //delete in the array
-    tasksCollection.splice(indexTask, 1);
+	tasksDisplayed[indexTask].classList.add("deleting");
 
-    //delete on screen
-    tasksDisplayed[indexTask].remove();
+	setTimeout(() => {
+		//delete in the array
+		tasksCollection.splice(indexTask, 1);
+
+		//delete on screen
+		tasksDisplayed[indexTask].remove();
+	}, 700);
 
 	taskOptions.classList.remove("show");
 	taskOptions.classList.add("hide");

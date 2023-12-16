@@ -76,6 +76,10 @@ main {
     padding-left: 15px;
 }
 
+.deleting {
+	animation: delete-to-left 500ms forwards;
+}
+
 #task-options {
     border: 1px solid black;
     justify-self: right;
@@ -242,6 +246,15 @@ header button:hover,
 	}
 	100% {
 		transform: translateX(40vw);
+	}
+}
+
+@keyframes delete-to-left {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(-80vw);
 	}
 }
 
