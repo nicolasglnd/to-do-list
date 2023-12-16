@@ -177,23 +177,25 @@ function displayNewTask() {
 function taskClicked(indexTask) {
     const currentTask = tasksCollection[indexTask];
 //style.visibility = visible and hidden
-    if (taskOptions.style.display == "none") {
+    if (taskOptions.classList.contains("hide") || taskOptions.classList.length === 0) {
         //display the values from object to task-options
         editingInputs[0].value = currentTask.title;
         editingInputs[1].value = currentTask.description;
         editingInputs[2].value = currentTask.expirationTime;
         editingInputs[3].value = currentTask.expirationDate;
 
-        taskOptions.style.display = "flex";
+        taskOptions.classList.add("show");
+        taskOptions.classList.remove("hide");
     }
-    else if (taskOptions.style.display = "flex" && indexTask != lastTaskIndex) {
+    else if (taskOptions.classList.contains("show") && indexTask != lastTaskIndex) {
         editingInputs[0].value = currentTask.title;
         editingInputs[1].value = currentTask.description;
         editingInputs[2].value = currentTask.expirationTime;
         editingInputs[3].value = currentTask.expirationDate;
     }
     else {
-        taskOptions.style.display = "none";
+		taskOptions.classList.remove("show");
+        taskOptions.classList.add("hide");
     }
 }
 
@@ -227,12 +229,15 @@ function deleteTask(indexTask) {
     //delete on screen
     tasksDisplayed[indexTask].remove();
 
-    taskOptions.style.display = "none";
+	taskOptions.classList.remove("show");
+	taskOptions.classList.add("hide");
 }
 
 //close task's options with button
-closeTaskOptions.addEventListener('click', () => taskOptions.style.display = "none");
-
+closeTaskOptions.addEventListener('click', () => {
+	taskOptions.classList.remove("show");
+	taskOptions.classList.add("hide");
+});
 
 //search task
 

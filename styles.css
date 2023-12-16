@@ -55,7 +55,6 @@ header button {
     padding: 1px;
 }
 
-
 #add-task-button {
     width: 15%;
     display: flex;
@@ -80,21 +79,22 @@ main {
 #task-options {
     border: 1px solid black;
     justify-self: right;
-    animation: right-to-left 500ms;                      /*makes an animation when appears*/
     background-color: var(--dark-green);
     border-radius: 5px;
     color: var(--white-greeny);
     overflow-wrap: break-word;
     position: fixed;
+	transform: translate(40vw);
+	width: 35vw;
 }
 
-/*#task-options[display: flex] {
-    animation: right-to-left 500ms;                      
+.show {
+	animation: right-to-left 500ms forwards;
 }
 
-#task-options[display: none] {
-    animation: right-to-left 500ms;                      
-}*/
+.hide {
+	animation: left-to-right 500ms forwards;
+}
 
 #task-options span {
     font-style: italic;
@@ -170,7 +170,9 @@ main {
     align-self: center;
 }
 
-#submit-new-task:hover, header button:hover, #task-options button:hover:not(.close-button) {
+#submit-new-task:hover,
+header button:hover,
+#task-options button:hover:not(.close-button) {
     background-color: #c9d0b6;
 }
 
@@ -231,6 +233,15 @@ main {
 	}
 	100% {
 		transform: translateX(0);
+	}
+}
+
+@keyframes left-to-right {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(40vw);
 	}
 }
 
