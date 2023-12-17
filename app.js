@@ -231,7 +231,7 @@ function deleteTask(indexTask) {
 
 		//delete on screen
 		tasksDisplayed[indexTask].remove();
-	}, 700);
+	}, 500);
 
 	taskOptions.classList.remove("show");
 	taskOptions.classList.add("hide");
