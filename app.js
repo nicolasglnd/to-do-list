@@ -101,13 +101,22 @@ function closeAddPopup(addingTask) {
         overlay.classList.remove("active");
 }
 
+function submitNewDate(time, date) {
+	let dateCopy = date.slice();
+	let timeCopy = time.slice();
+	if (time === "" && date !== "") timeCopy = "00:00";
+	if (date === "" && time !== "") {
+		let dateNow = new Date();
+		dateCopy = `${dateNow.getFullYear()}-${dateNow.getMonth() + 1}-${dateNow.getDate()}`;
+	}
+	return timeCopy + "," + dateCopy;
+}
 
 //button to submit the new task and getting the data from inputs
 buttonNewTaskPopup.addEventListener('click', () => {
     const title = inputsNewTaskPopup[0].value;
     const description = inputsNewTaskPopup[1].value;
-    const expirationTime = inputsNewTaskPopup[2].value;
-    const expirationDate = inputsNewTaskPopup[3].value;
+	let [expirationTime, expirationDate] = submitNewDate(inputsNewTaskPopup[2].value, inputsNewTaskPopup[3].value).split(",");
 
     tasksCollection.push(new Task(title, description, expirationTime, expirationDate));
     displayNewTask();
@@ -206,8 +215,9 @@ function changeTask(indexTask) {
     //change tasksCollection (the array)
     tasksCollection[indexTask].title = editingInputs[0].value;
     tasksCollection[indexTask].description = editingInputs[1].value;
-    tasksCollection[indexTask].expirationTime = editingInputs[2].value;
-    tasksCollection[indexTask].expirationDate = editingInputs[3].value;
+	let [expirationTime, expirationDate] = submitNewDate(editingInputs[2].value, editingInputs[3].value).split(",");
+    tasksCollection[indexTask].expirationTime = expirationTime;
+    tasksCollection[indexTask].expirationDate = expirationDate;
 
     //checks if description is empty to add or not add a style.
     areEmpty(indexTask);
@@ -270,13 +280,13 @@ restartSearchButton.addEventListener('click', () => {
 let expireInterval;
 
 expireInterval = setInterval(() => {
-	console.log("uwu");
-
 	for (let i = 0; i < tasksCollection.length; i++) {
 		const ID = "task-" + tasksCollection[i].id;
 		const DATE = tasksCollection[i].expirationDate;
 		const TIME = tasksCollection[i].expirationTime;
 		const task = document.getElementById(ID);
+
+		if (DATE === "" || TIME === "") continue;
 
 		if (isExpired(DATE, TIME) && !task.children[2].classList.contains("expired")) {
 			task.children[2].classList.add("expired");
@@ -286,11 +296,8 @@ expireInterval = setInterval(() => {
 			task.children[2].classList.remove("expired");
 			task.children[3].classList.remove("expired");
 		}
-		else {
-			console.log(ID);
-		}
 	}
-}, 20000); //60000
+}, 60000); //60000 == 1m
 
 
 //function that will trak of the state of the description and time-date to add the lines.
