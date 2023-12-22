@@ -9,6 +9,7 @@
     --dark-green: rgb(109, 125, 85);
     --white-greeny: #d3d5ce;
     --pure-black-greeny: #151514;
+	--width-task-options-move: 40vw;
 }
 
 
@@ -69,6 +70,7 @@ main {
     height: 87vh;
     font-size: 18px;
 	gap: 80px;
+	overflow-x: hidden;
 }
 
 #tasks-list {
@@ -88,7 +90,9 @@ main {
     color: var(--white-greeny);
     overflow-wrap: break-word;
     position: fixed;
-	transform: translate(40vw);
+	top: 90px;
+	right: 0px;
+	transform: translate(100vw);
 	width: 35vw;
 }
 
@@ -233,7 +237,7 @@ header button:hover,
 
 @keyframes right-to-left {
 	0% {
-		transform: translateX(40vw);
+		transform: translateX(var(--width-task-options-move));
 	}
 	100% {
 		transform: translateX(0);
@@ -245,7 +249,7 @@ header button:hover,
 		transform: translateX(0);
 	}
 	100% {
-		transform: translateX(40vw);
+		transform: translateX(var(--width-task-options-move));
 	}
 }
 
@@ -264,10 +268,73 @@ header button:hover,
 		width: auto;
 	}
 
+	h2  {
+		font-size: 22px;
+	}
+
+	#task > p,
+	h4,
+    label {
+		font-size: 16px;
+	}
+}
+
+@media(max-width: 660px) {
+	main {
+		margin-right: 20px;
+		margin-left: 20px;
+		display: block;
+	}
+
+	#tasks-list {
+		margin-right: 0px;
+		padding-left: 0px;
+	}
+
+	#task-options {
+		width: fit-content;
+	}
+	.task {
+		max-width: none;
+	}
+
+
+
+	:root {
+		--width-task-options-move: 100vw;
+	}
+
+	
 }
 
 @media(max-width: 500px) {
 	#search-container {
 		gap: 12px;
+	}
+
+	#search-container {
+		width: fit-content;
+	}
+}
+
+@media(max-width: 415px) {
+	#task-options {
+		width: 87vw;
+	}
+}
+
+@media(max-width: 385px) {
+	header {
+		justify-content: center;
+		gap: 12px;
+	}
+
+	#search-container {
+		width: 50%;
+		justify-content: space-evenly;
+	}
+
+	#search-container input {
+		width: 45%;
 	}
 }
