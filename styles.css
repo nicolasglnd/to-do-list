@@ -10,6 +10,7 @@
     --white-greeny: #d3d5ce;
     --pure-black-greeny: #151514;
 	--width-task-options-move: 40vw;
+	--width-task-delete: -80vw;
 }
 
 
@@ -258,7 +259,7 @@ header button:hover,
 		transform: translateX(0);
 	}
 	100% {
-		transform: translateX(-80vw);
+		transform: translateX(var(--width-task-delete));
 	}
 }
 
@@ -298,13 +299,10 @@ header button:hover,
 		max-width: none;
 	}
 
-
-
 	:root {
 		--width-task-options-move: 100vw;
+		--width-task-delete: -100vw;
 	}
-
-	
 }
 
 @media(max-width: 500px) {
