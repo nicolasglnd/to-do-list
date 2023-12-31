@@ -112,6 +112,20 @@ function submitNewDate(time, date) {
 	return timeCopy + "," + dateCopy;
 }
 
+//localStorage Logic
+
+const _localTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+
+for (let i = 0; i < _localTasks.length; i++) {
+	let localTitle = _localTasks[i]._title;
+	let localDescription = _localTasks[i]._description;
+	let localTime = _localTasks[i]._expirationTime;
+	let localDate = _localTasks[i]._expirationDate;
+
+	tasksCollection.push(new Task(localTitle, localDescription, localTime, localDate));
+	displayNewTask();
+}
+
 //button to submit the new task and getting the data from inputs
 buttonNewTaskPopup.addEventListener('click', () => {
     const title = inputsNewTaskPopup[0].value;
@@ -120,6 +134,8 @@ buttonNewTaskPopup.addEventListener('click', () => {
 
     tasksCollection.push(new Task(title, description, expirationTime, expirationDate));
     displayNewTask();
+
+	localStorage.setItem("tasks", JSON.stringify(tasksCollection));
 
     inputsNewTaskPopup[0].value = null;
     inputsNewTaskPopup[1].value = null;
@@ -219,6 +235,9 @@ function changeTask(indexTask) {
     tasksCollection[indexTask].expirationTime = expirationTime;
     tasksCollection[indexTask].expirationDate = expirationDate;
 
+	//change in localStorage
+	localStorage.setItem("tasks", JSON.stringify(tasksCollection));
+
     //checks if description is empty to add or not add a style.
     areEmpty(indexTask);
 
@@ -238,6 +257,9 @@ function deleteTask(indexTask) {
 	setTimeout(() => {
 		//delete in the array
 		tasksCollection.splice(indexTask, 1);
+
+		//delete in localStorage
+		localStorage.setItem("tasks", JSON.stringify(tasksCollection));
 
 		//delete on screen
 		tasksDisplayed[indexTask].remove();
