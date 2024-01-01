@@ -133,6 +133,9 @@ function updateLocalTasks() {	//it works to create, update and delete cause it r
 //button to submit the new task and getting the data from inputs
 buttonNewTaskPopup.addEventListener('click', () => {
     const title = inputsNewTaskPopup[0].value;
+
+	if (!title) return null;
+
     const description = inputsNewTaskPopup[1].value;
 	let [expirationTime, expirationDate] = submitNewDate(inputsNewTaskPopup[2].value, inputsNewTaskPopup[3].value).split(",");
 
