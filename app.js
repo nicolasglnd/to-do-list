@@ -234,6 +234,9 @@ confirmChanges.addEventListener('click', () => changeTask(currentTaskIndex));
 
 function changeTask(indexTask) {
     //change tasksCollection (the array)
+
+	if (!editingInputs[0].value) return null;
+
     tasksCollection[indexTask].title = editingInputs[0].value;
     tasksCollection[indexTask].description = editingInputs[1].value;
 	let [expirationTime, expirationDate] = submitNewDate(editingInputs[2].value, editingInputs[3].value).split(",");
