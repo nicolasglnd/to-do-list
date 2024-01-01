@@ -126,6 +126,10 @@ for (let i = 0; i < _localTasks.length; i++) {
 	displayNewTask();
 }
 
+function updateLocalTasks() {	//it works to create, update and delete cause it replaces it
+	localStorage.setItem("tasks", JSON.stringify(tasksCollection));
+}
+
 //button to submit the new task and getting the data from inputs
 buttonNewTaskPopup.addEventListener('click', () => {
     const title = inputsNewTaskPopup[0].value;
@@ -135,7 +139,7 @@ buttonNewTaskPopup.addEventListener('click', () => {
     tasksCollection.push(new Task(title, description, expirationTime, expirationDate));
     displayNewTask();
 
-	localStorage.setItem("tasks", JSON.stringify(tasksCollection));
+	updateLocalTasks();
 
     inputsNewTaskPopup[0].value = null;
     inputsNewTaskPopup[1].value = null;
@@ -236,7 +240,7 @@ function changeTask(indexTask) {
     tasksCollection[indexTask].expirationDate = expirationDate;
 
 	//change in localStorage
-	localStorage.setItem("tasks", JSON.stringify(tasksCollection));
+	updateLocalTasks();
 
     //checks if description is empty to add or not add a style.
     areEmpty(indexTask);
@@ -259,7 +263,7 @@ function deleteTask(indexTask) {
 		tasksCollection.splice(indexTask, 1);
 
 		//delete in localStorage
-		localStorage.setItem("tasks", JSON.stringify(tasksCollection));
+		updateLocalTasks();
 
 		//delete on screen
 		tasksDisplayed[indexTask].remove();
