@@ -183,7 +183,6 @@ function displayNewTask() {
     areEmpty(newIndex);
 
 
-    //adding the event whenever a new task is made to that task:
     //onclick the task will display its option to the right side:
     tasksDisplayed[tasksDisplayed.length - 1].addEventListener('click', (event) => {
         targetClicked = event.target;       //need to access the div
@@ -194,7 +193,6 @@ function displayNewTask() {
         //using regex, will take only the digits in global and then join that array with no spaces.
         targetId = parseInt(targetClicked.id.match(/\d/g).join(""));
 
-        //currentTask = tasksCollection.filter(task => task.id == targetId);  if whole object needed
         currentTaskIndex = tasksCollection.findIndex(task => task.id === targetId);
 
         taskClicked(currentTaskIndex);
@@ -205,7 +203,7 @@ function displayNewTask() {
 // function that opens and closes the task's options
 function taskClicked(indexTask) {
     const currentTask = tasksCollection[indexTask];
-//style.visibility = visible and hidden
+
     if (taskOptions.classList.contains("hide") || taskOptions.classList.length === 0) {
         //display the values from object to task-options
         editingInputs[0].value = currentTask.title;
@@ -302,7 +300,7 @@ restartSearchButton.addEventListener('click', () => {
 	searchTask();
 });
 
-//every 1 minutes, checks if task has expired
+//every 1 minute, checks if task has expired
 let expireInterval;
 
 expireInterval = setInterval(() => {
@@ -323,10 +321,10 @@ expireInterval = setInterval(() => {
 			task.children[3].classList.remove("expired");
 		}
 	}
-}, 60000); //60000 == 1m
+}, 60000);
 
 
-//function that will trak of the state of the description and time-date to add the lines.
+//function that will track of the state of the description and time-date to add the lines.
 //this function will be in the changeTask function and displayNewTask function.
 function areEmpty(indexTask) {
     const task = tasksCollection[indexTask];
@@ -354,22 +352,6 @@ function formatTimeTo12(timeAt24) {
     return `${hours.toString()}:${minutes} ${meridiem}`;
 }
 
-//there is no need for this, delete later if proven unnecessary
-/*function formatTimeTo24(timeAt12) {
-    if (timeAt12 === "") return "";
-
-	let [hours, minutes, meridiem] = timeAt12.split(/\W/);
-
-	if (meridiem === "PM") {
-		hours = parseInt(hours) + 12;
-	}
-	else if (meridiem === "AM" && hours === "12") {
-		hours = "0";
-	}
-
-    return `${hours.toString()}:${minutes}`;
-}*/
-
 function formatDate(taskDate) {         //formats to month/day/year
     if (taskDate === "") return "";
 
@@ -389,28 +371,3 @@ function isExpired(date, time) {	//accepts only 24 time
 	return  (epochTask - epochNow < 0);
 }
 
-/*
- * this function i kept it here if i need to use the html node
- function formatTime12(htmlNode = null, timeAt24 = null) {
-    //htmlNode is the input from html and timeAt24 if the input is like 14:23
-    let hours;
-    let minutes;
-
-    if (htmlNode != null && htmlNode.value === "") return "";
-    if (timeAt24 != null && timeAt24 === "") return "";
-
-    if (timeAt24 != null) {
-        hours = timeAt24.split(":")[0];
-        minutes = timeAt24.split(":")[1];
-    }
-    else {
-        hours = htmlNode.value.split(":")[0];
-        minutes = htmlNode.value.split(":")[1];
-    }
-
-    let meridiem = hours >= 12 ? "PM" : "AM";
-    hours = (hours % 12) || 12;
-    console.log(hours, minutes, meridiem)
-    return `${hours.toString()}:${minutes} ${meridiem}`;
-}
- */
