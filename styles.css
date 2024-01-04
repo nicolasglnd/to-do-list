@@ -35,12 +35,12 @@ header {
     right: 0px;
     left: 0px;
     display: flex;
-    flex-direction: row;
     height: 45px;
     align-items: center;
 	justify-content: space-evenly;
     background-color: var(--dark-green);
     border-bottom: 3px solid rgba(90, 102, 73, 0.88);
+	padding: 0 5px;
 }
 
 header button {
@@ -48,24 +48,10 @@ header button {
     margin-top: 1px;
 }
 
-#search-container {
-    width: 70%;
-	display: flex;
-	gap: 20px;
-	justify-content: space-evenly;
-}
-
-#search-container input {
-    width: 70%;
+#text-to-search {
+    width: 50vw;
     background-color: var(--white-greeny);
     padding: 1px;
-}
-
-#add-task-button {
-    width: 15%;
-    display: flex;
-    flex-direction: row;
-    justify-content: end;
 }
 
 main {
@@ -272,11 +258,6 @@ header button:hover,
 }
 
 @media(max-width: 715px) {
-
-	#add-task-button {
-		width: auto;
-	}
-
 	h2  {
 		font-size: 22px;
 	}
@@ -313,34 +294,25 @@ header button:hover,
 	}
 }
 
-@media(max-width: 500px) {
-	#search-container {
-		gap: 12px;
-	}
-
-	#search-container {
-		width: fit-content;
-	}
-}
-
 @media(max-width: 415px) {
 	#task-options {
 		width: 87vw;
 	}
 }
 
-@media(max-width: 385px) {
+@media(max-width: 390px) {
 	header {
-		justify-content: center;
-		gap: 12px;
+		gap: 5px;
 	}
 
-	#search-container {
-		width: 50%;
-		justify-content: space-evenly;
-	}
-
-	#search-container input {
-		width: 45%;
+	#text-to-search {
+		width: 35vw;
 	}
 }
+
+@media(max-width: 290px) {
+	#text-to-search {
+		width: 25vw;
+	}
+}
+
