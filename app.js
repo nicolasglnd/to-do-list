@@ -49,10 +49,10 @@ const overlay = document.getElementById("new-task-overlay");
 const inputsNewTaskPopup = document.querySelectorAll(".inputs-new-task");
 const buttonNewTaskPopup = document.getElementById("submit-new-task");
 const tasksCollection = [];
-const tasksContainer = document.getElementById("tasks-list");           //is the parent
+const tasksContainer = document.getElementById("tasks-list");
 
 //tasksDisplayed is a live NodeList that will get updated everytime a new element in tasksContainer gets added
-let tasksDisplayed = tasksContainer.childNodes;                     //are the children
+let tasksDisplayed = tasksContainer.childNodes;
 const taskOptions = document.querySelector("#task-options");
 const editingInputs = document.querySelectorAll(".inputs-editing-task");
 const confirmChanges = document.getElementById("confirm-changes");
@@ -67,7 +67,6 @@ const PBORDER = "2px solid var(--dark-green-alpha)";
 
 
 //button add and close the popup:
-// forEach bcz if there are more buttons that activate it
 openAddTaskButton.forEach(btn => {
     btn.addEventListener('click', () => {
         const addTask = document.querySelector(btn.dataset.addTarget);
@@ -91,13 +90,13 @@ overlay.addEventListener('click', () => {
 
 function openAddPopup(addingTask) {
     if (addingTask == null) return
-        addingTask.classList.add("active");             //will add a new class to the html element
+        addingTask.classList.add("active");
         overlay.classList.add("active");
 }
 
 function closeAddPopup(addingTask) {
     if (addingTask == null) return
-        addingTask.classList.remove("active");             //will remove class from the html element
+        addingTask.classList.remove("active");
         overlay.classList.remove("active");
 }
 
@@ -113,7 +112,6 @@ function submitNewDate(time, date) {
 }
 
 //localStorage Logic
-
 const _localTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
 
 for (let i = 0; i < _localTasks.length; i++) {
@@ -128,6 +126,45 @@ for (let i = 0; i < _localTasks.length; i++) {
 
 function updateLocalTasks() {	//it works to create, update and delete cause it replaces it
 	localStorage.setItem("tasks", JSON.stringify(tasksCollection));
+}
+
+//expiration check logic
+makeExpiration();
+
+//every 1 minute, checks if task has expired
+let expireInterval;
+expireInterval = setInterval(() => {
+	makeExpiration();
+}, 60000);
+
+function makeExpiration() {
+	for (let i = 0; i < tasksCollection.length; i++) {
+		const ID = "task-" + tasksCollection[i].id;
+		const DATE = tasksCollection[i].expirationDate;
+		const TIME = tasksCollection[i].expirationTime;
+		const task = document.getElementById(ID);
+
+		if (DATE === "" || TIME === "") continue;
+
+		if (isExpired(DATE, TIME) && !task.children[2].classList.contains("expired")) {
+			task.children[2].classList.add("expired");
+			task.children[3].classList.add("expired");
+		}
+		else if (!isExpired(DATE, TIME) && task.children[2].classList.contains("expired")) {
+			task.children[2].classList.remove("expired");
+			task.children[3].classList.remove("expired");
+		}
+	}
+	console.log("UwU");
+}
+
+function makeExpirationComplete() {
+	for (let i = 0; i < tasksCollection.length; i++) {
+	}
+}
+
+function stopExpireTimer() {
+	clearInterval(expireInterval);
 }
 
 //button to submit the new task and getting the data from inputs
@@ -177,14 +214,13 @@ function displayNewTask() {
 
     newTaskDisplayed.append(taskTitle, taskDescription, taskTime, taskDate);
 
-    //add the parent element with all children to the document
+    //add the parent element
     newTaskDisplayed.setAttribute("id", "task-" + taskId);      //adds same id of the tasksCollection to the newTaskDisplayed plus the task-
     newTaskDisplayed.classList.add("task");
     tasksContainer.appendChild(newTaskDisplayed);
 
     //checks if description is empty to add or not add a style.
     areEmpty(newIndex);
-
 
     //onclick the task will display its option to the right side:
     tasksDisplayed[tasksDisplayed.length - 1].addEventListener('click', (event) => {
@@ -193,17 +229,17 @@ function displayNewTask() {
             targetClicked = event.target.parentElement;
         }
 
-        //using regex, will take only the digits in global and then join that array with no spaces.
+        //takes only the digits in global and then join that array with no spaces.
         targetId = parseInt(targetClicked.id.match(/\d/g).join(""));
 
         currentTaskIndex = tasksCollection.findIndex(task => task.id === targetId);
 
         taskClicked(currentTaskIndex);
-        lastTaskIndex = currentTaskIndex.valueOf();         //it copies the value not reference.
+        lastTaskIndex = currentTaskIndex.valueOf();
     });
 }
 
-// function that opens and closes the task's options
+//opens and closes the task's options
 function taskClicked(indexTask) {
     const currentTask = tasksCollection[indexTask];
 
@@ -229,14 +265,13 @@ function taskClicked(indexTask) {
     }
 }
 
-// confirm changes button
+//confirm changes
 confirmChanges.addEventListener('click', () => changeTask(currentTaskIndex));
 
 function changeTask(indexTask) {
-    //change tasksCollection (the array)
-
 	if (!editingInputs[0].value) return null;
 
+    //change tasksCollection
     tasksCollection[indexTask].title = editingInputs[0].value;
     tasksCollection[indexTask].description = editingInputs[1].value;
 	let [expirationTime, expirationDate] = submitNewDate(editingInputs[2].value, editingInputs[3].value).split(",");
@@ -254,6 +289,8 @@ function changeTask(indexTask) {
     tasksDisplayed[indexTask].children[1].textContent = tasksCollection[indexTask].description;
     tasksDisplayed[indexTask].children[2].textContent = formatTimeTo12(tasksCollection[indexTask].expirationTime);
     tasksDisplayed[indexTask].lastChild.textContent = formatDate(tasksCollection[indexTask].expirationDate);
+
+	makeExpiration();
 }
 
 // delete task button
@@ -263,14 +300,9 @@ function deleteTask(indexTask) {
 	tasksDisplayed[indexTask].classList.add("deleting");
 
 	setTimeout(() => {
-		//delete in the array
-		tasksCollection.splice(indexTask, 1);
-
-		//delete in localStorage
-		updateLocalTasks();
-
-		//delete on screen
-		tasksDisplayed[indexTask].remove();
+		tasksCollection.splice(indexTask, 1);		//delete in the array
+		updateLocalTasks(); 						//delete in localStorage
+		tasksDisplayed[indexTask].remove(); 		//delete on screen
 	}, 500);
 
 	taskOptions.classList.remove("show");
@@ -284,7 +316,6 @@ closeTaskOptions.addEventListener('click', () => {
 });
 
 //search task
-
 searchInput.addEventListener('input', searchTask);
 
 function searchTask() {
@@ -305,30 +336,6 @@ restartSearchButton.addEventListener('click', () => {
     searchInput.value = null;
 	searchTask();
 });
-
-//every 1 minute, checks if task has expired
-let expireInterval;
-
-expireInterval = setInterval(() => {
-	for (let i = 0; i < tasksCollection.length; i++) {
-		const ID = "task-" + tasksCollection[i].id;
-		const DATE = tasksCollection[i].expirationDate;
-		const TIME = tasksCollection[i].expirationTime;
-		const task = document.getElementById(ID);
-
-		if (DATE === "" || TIME === "") continue;
-
-		if (isExpired(DATE, TIME) && !task.children[2].classList.contains("expired")) {
-			task.children[2].classList.add("expired");
-			task.children[3].classList.add("expired");
-		}
-		else if (!isExpired(DATE, TIME) && task.children[2].classList.contains("expired")) {
-			task.children[2].classList.remove("expired");
-			task.children[3].classList.remove("expired");
-		}
-	}
-}, 60000);
-
 
 //function that will track of the state of the description and time-date to add the lines.
 //this function will be in the changeTask function and displayNewTask function.
