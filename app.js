@@ -129,37 +129,33 @@ function updateLocalTasks() {	//it works to create, update and delete cause it r
 }
 
 //expiration check logic
-makeExpiration();
+makeExpirationComplete();
 
 //every 1 minute, checks if task has expired
 let expireInterval;
-expireInterval = setInterval(() => {
-	makeExpiration();
-}, 60000);
+expireInterval = setInterval(makeExpirationComplete, 60000);
 
-function makeExpiration() {
-	for (let i = 0; i < tasksCollection.length; i++) {
-		const ID = "task-" + tasksCollection[i].id;
-		const DATE = tasksCollection[i].expirationDate;
-		const TIME = tasksCollection[i].expirationTime;
-		const task = document.getElementById(ID);
+function makeExpiration(taskIndex) {
+	const ID = "task-" + tasksCollection[taskIndex].id;
+	const DATE = tasksCollection[taskIndex].expirationDate;
+	const TIME = tasksCollection[taskIndex].expirationTime;
+	const task = document.getElementById(ID);
 
-		if (DATE === "" || TIME === "") continue;
+	if (DATE === "" || TIME === "") return;
 
-		if (isExpired(DATE, TIME) && !task.children[2].classList.contains("expired")) {
-			task.children[2].classList.add("expired");
-			task.children[3].classList.add("expired");
-		}
-		else if (!isExpired(DATE, TIME) && task.children[2].classList.contains("expired")) {
-			task.children[2].classList.remove("expired");
-			task.children[3].classList.remove("expired");
-		}
+	if (isExpired(DATE, TIME) && !task.children[2].classList.contains("expired")) {
+		task.children[2].classList.add("expired");
+		task.children[3].classList.add("expired");
 	}
-	console.log("UwU");
+	else if (!isExpired(DATE, TIME) && task.children[2].classList.contains("expired")) {
+		task.children[2].classList.remove("expired");
+		task.children[3].classList.remove("expired");
+	}
 }
 
 function makeExpirationComplete() {
 	for (let i = 0; i < tasksCollection.length; i++) {
+		makeExpiration(i);
 	}
 }
 
@@ -290,7 +286,7 @@ function changeTask(indexTask) {
     tasksDisplayed[indexTask].children[2].textContent = formatTimeTo12(tasksCollection[indexTask].expirationTime);
     tasksDisplayed[indexTask].lastChild.textContent = formatDate(tasksCollection[indexTask].expirationDate);
 
-	makeExpiration();
+	makeExpiration(currentTaskIndex);
 }
 
 // delete task button
