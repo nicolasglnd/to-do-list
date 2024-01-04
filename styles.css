@@ -51,7 +51,7 @@ header button {
 #text-to-search {
     width: 50vw;
     background-color: var(--white-greeny);
-    padding: 1px;
+    padding: 4px;
 }
 
 main {
@@ -294,6 +294,12 @@ header button:hover,
 	}
 }
 
+@media(max-width: 450px) {
+	#text-to-search {
+		width: 45vw;
+	}
+}
+
 @media(max-width: 415px) {
 	#task-options {
 		width: 87vw;
@@ -310,7 +316,7 @@ header button:hover,
 	}
 }
 
-@media(max-width: 290px) {
+@media(max-width: 300px) {
 	#text-to-search {
 		width: 25vw;
 	}
