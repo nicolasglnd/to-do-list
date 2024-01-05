@@ -9,7 +9,7 @@
     --dark-green: rgb(109, 125, 85);
     --white-greeny: #d3d5ce;
     --pure-black-greeny: #151514;
-	--width-task-options-move: 40vw;
+	--width-task-options-move: 100%;
 	--width-task-delete: -80vw;
 }
 
@@ -82,7 +82,7 @@ main {
     position: fixed;
 	top: 90px;
 	right: 0px;
-	transform: translate(100vw);
+	transform: translateX(100vw);
 	padding: 10px 25px;
 }
 
@@ -288,7 +288,6 @@ header button:hover,
 	}
 
 	:root {
-		--width-task-options-move: 100vw;
 		--width-task-delete: -100vw;
 	}
 }
