@@ -176,6 +176,7 @@ buttonNewTaskPopup.addEventListener('click', () => {
     displayNewTask();
 
 	updateLocalTasks();
+	makeExpiration(tasksCollection.length - 1);		//checks expiration after adding the new task on screen and array
 
     inputsNewTaskPopup[0].value = null;
     inputsNewTaskPopup[1].value = null;
