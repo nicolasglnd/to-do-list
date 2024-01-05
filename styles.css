@@ -75,7 +75,6 @@ main {
 
 #task-options {
     border: 1px solid black;
-    justify-self: right;
     background-color: var(--dark-green);
     border-radius: 5px;
     color: var(--white-greeny);
@@ -84,7 +83,7 @@ main {
 	top: 90px;
 	right: 0px;
 	transform: translate(100vw);
-	width: 35vw;
+	padding: 10px 25px;
 }
 
 .show {
@@ -156,11 +155,14 @@ main {
 }
 
 #add-task-container, #task-options {
-    padding: 10px 15px;
     display: flex;
     flex-direction: column;
     margin-top: -10px;
     gap: 3px;
+}
+
+#add-task-container {
+    padding: 10px 15px;
 }
 
 #add-task-container label {
@@ -271,8 +273,8 @@ header button:hover,
 
 @media(max-width: 660px) {
 	main {
-		margin-right: 20px;
-		margin-left: 20px;
+		padding-right: 30px;
+		padding-left: 30px;
 		display: block;
 	}
 
@@ -281,9 +283,6 @@ header button:hover,
 		padding-left: 0px;
 	}
 
-	#task-options {
-		width: fit-content;
-	}
 	.task {
 		max-width: none;
 	}
@@ -298,11 +297,9 @@ header button:hover,
 	#text-to-search {
 		width: 45vw;
 	}
-}
 
-@media(max-width: 415px) {
 	#task-options {
-		width: 87vw;
+		width: 80vw;
 	}
 }
 
